@@ -4,9 +4,10 @@ import logging
 import os
 from bot.strategies.arbitrage import ArbitrageStrategy
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 
 def main():
+    strategy = None
     try:
         private_key = os.environ.get('PRIVATE_KEY')
         network = os.environ.get('NETWORK')
@@ -14,9 +15,10 @@ def main():
         strategy.start()
     except KeyboardInterrupt:
         logging.debug("Interrupt received, stopping...")
-        strategy.stop()
-        logging.debug("OK")
-
+    finally:
+        if strategy:
+            strategy.stop()
+            logging.debug("OK")
 
 if __name__ == "__main__":
     main()
