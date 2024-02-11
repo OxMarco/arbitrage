@@ -23,7 +23,7 @@ class ArbitrageStrategy():
 
     def start(self):
         # TODO load positions from db
- 
+        self.vertex.product_info(10)
         # init the threads
         if not self.executor_thread:
             self.executor_thread = threading.Thread(target=self.execute, daemon=True)

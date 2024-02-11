@@ -23,6 +23,20 @@ class Vertex():
         self.client = create_vertex_client(self.network, self.private_key)
         logging.debug("OK")
 
+    
+    def market_info(self):
+        markets = self.client.market.get_all_engine_markets()
+        products = self.client.market.get_all_product_symbols()
+        logging.info(markets)
+        logging.info(products)
+
+
+    def product_info(self, product_id: int):
+        prices = self.client.perp.get_prices(product_id)
+        funding_rates = self.client.market.get_perp_funding_rate(product_id)
+        logging.info(prices.json())
+        logging.info(funding_rates.json())
+
 
     def place_order(self, amount):
         token_allowance = self.client.spot.get_token_allowance(0, self.client.context.signer.address)
